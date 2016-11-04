@@ -6,10 +6,14 @@
     // Do not send fatal errors to the response body!
     ini_set("display_errors", "off");
 
+    // Automagically set $environmentVar to 'dev' or 'production'
+    // You will need to change this if your dev site isn't on the local computer
+    $environmentVar = $_SERVER['SERVER_ADDR'] === '127.0.0.1' ? 'dev' : 'production';
+
     /* Instantiate the Slim application */
     $app = new \UserFrosting\UserFrosting([
         'view' =>           new \Slim\Views\Twig(),
-        'mode' =>           'dev'   // Set to 'dev' or 'production'
+        'mode' =>           $environmentVar
     ]);
 
     // Get file path to public directory for this website.  Is this guaranteed to work in all environments?
